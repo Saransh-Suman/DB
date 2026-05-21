@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Times New Roman'; color: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Times New Roman'; color: #000000; min-height: 15.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px 'Times New Roman'; color: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Times New Roman'; color: #000000}
+  </style>
+</head>
+<body>
+<p class="p1"><b>UPDATE DEPARTMENT TO ASSIGN MANAGERS</b></p>
+<p class="p1">UPDATE DEPARTMENT</p>
+<p class="p1">SET MgrSSN = 101,</p>
+<p class="p1">MgrStartDate = TO_DATE('01-01-2023','DD-MM-YYYY')</p>
+<p class="p1">WHERE DNo = 1;</p>
+<p class="p1">UPDATE DEPARTMENT</p>
+<p class="p1">SET MgrSSN = 102,</p>
+<p class="p1">MgrStartDate = TO_DATE('15-02-2023','DD-MM-YYYY')</p>
+<p class="p1">WHERE DNo = 2;</p>
+<p class="p1">UPDATE DEPARTMENT</p>
+<p class="p1">SET MgrSSN = 104,</p>
+<p class="p1">MgrStartDate = TO_DATE('10-03-2023','DD-MM-YYYY')</p>
+<p class="p1">WHERE DNo = 3;</p>
+<p class="p2"><br></p>
+<p class="p1">1.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><b>ADD A FOREIGN KEY CONSTRAINT TO DEPARTMENT TABLE</b></p>
+<p class="p1">ALTER TABLE DEPARTMENT</p>
+<p class="p1">ADD CONSTRAINT FK_Dept_Manager</p>
+<p class="p1">FOREIGN KEY (MgrSSN)</p>
+<p class="p1">REFERENCES EMPLOYEE(SSN);</p>
+<p class="p2"><br></p>
+<p class="p1">2.</p>
+<p class="p1"><b>CHANGE DATA TYPE OF A COLUMN</b></p>
+<p class="p1">ALTER TABLE EMPLOYEE</p>
+<p class="p1">MODIFY Salary DECIMAL(12,2);</p>
+<p class="p2"><br></p>
+<p class="p1">3.</p>
+<p class="p1"><b>ADD CHECK CONSTRAINT (SALARY MUST BE ≥ 30000)</b></p>
+<p class="p1">ALTER TABLE EMPLOYEE</p>
+<p class="p1">ADD CONSTRAINT CHK_Salary</p>
+<p class="p1">CHECK (Salary &gt;= 30000);</p>
+<p class="p2"><br></p>
+<p class="p1">4.</p>
+<p class="p1"><b>DROP A FOREIGN KEY CONSTRAINT OF EMPLOYEE TABLE</b></p>
+<p class="p1">ALTER TABLE EMPLOYEE</p>
+<p class="p1">DROP FOREIGN KEY FK_Emp_Dept;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">1.</p>
+<p class="p1"><b>RETRIEVE NAMES AND PHONE NUMBERS OF ALL FEMALE STUDENTS</b></p>
+<p class="p1">SELECT SName, Phone</p>
+<p class="p1">FROM STUDENT</p>
+<p class="p1">WHERE Gender = 'Female';</p>
+<p class="p2"><br></p>
+<p class="p1">2.</p>
+<p class="p1"><b>LIST STUDENT NAMES ALONG WITH THEIR SEMESTER AND SECTION</b></p>
+<p class="p1">SELECT SName, Sem, Sec</p>
+<p class="p1">FROM STUDENT, CLASS, SEMSEC</p>
+<p class="p1">WHERE STUDENT.USN = CLASS.USN</p>
+<p class="p1">AND CLASS.SSID = SEMSEC.SSID;</p>
+<p class="p2"><br></p>
+<p class="p1">3.</p>
+<p class="p1"><b>LIST ALL STUDENTS WITH THEIR INTERNAL MARKS IN EACH SUBJECT</b></p>
+<p class="p1">SELECT SName, Subcode, Test1, Test2, Test3, FinalIA</p>
+<p class="p1">FROM STUDENT, IA_MARKS</p>
+<p class="p1">WHERE STUDENT.USN = IA_MARKS.USN;</p>
+<p class="p2"><br></p>
+<p class="p1">4.</p>
+<p class="p3"><b>TOTAL NUMBER OF MALE AND FEMALE STUDENTS IN EACH SEMESTER AND SECTION</b></p>
+<p class="p1">SELECT Sem, Sec, Gender, COUNT(*) AS Total</p>
+<p class="p1">FROM STUDENT, CLASS, SEMSEC</p>
+<p class="p1">WHERE STUDENT.USN = CLASS.USN</p>
+<p class="p1">AND CLASS.SSID = SEMSEC.SSID</p>
+<p class="p1">GROUP BY Sem, Sec, Gender;</p>
+<p class="p2"><br></p>
+<p class="p1">5.</p>
+<p class="p4"><b>RETRIEVE STUDENTS WHO SCORED MORE THAN 20 IN ALL THREE TESTS</b></p>
+<p class="p1">SELECT USN</p>
+<p class="p1">FROM IA_MARKS</p>
+<p class="p1">WHERE Test1 &gt; 20 AND Test2 &gt; 20 AND Test3 &gt; 20;</p>
+<p class="p2"><br></p>
+<p class="p1">6.</p>
+<p class="p3"><b>CALCULATE FINALIA (AVERAGE OF BEST TWO TEST MARKS) AND UPDATE TABLE</b></p>
+<p class="p1">UPDATE IA_MARKS</p>
+<p class="p1">SET FinalIA = (</p>
+<p class="p1">(Test1 + Test2 + Test3</p>
+<p class="p1">- LEAST(Test1, Test2, Test3)) / 2</p>
+<p class="p1">);</p>
+<p class="p2"><br></p>
+<p class="p1">7.</p>
+<p class="p1"><b>CATEGORIZE STUDENTS (ONLY 8TH SEM A, B, C SECTIONS)</b></p>
+<p class="p1">SELECT SName, Sem, Sec, FinalIA,</p>
+<p class="p1">CASE</p>
+<p class="p1">WHEN FinalIA BETWEEN 21 AND 25 THEN 'Outstanding'</p>
+<p class="p1">WHEN FinalIA BETWEEN 16 AND 20 THEN 'Average'</p>
+<p class="p1">ELSE 'Weak'</p>
+<p class="p1">END AS Category</p>
+<p class="p1">FROM STUDENT, CLASS, SEMSEC, IA_MARKS</p>
+<p class="p1">WHERE STUDENT.USN = CLASS.USN</p>
+<p class="p1">AND CLASS.SSID = SEMSEC.SSID</p>
+<p class="p1">AND STUDENT.USN = IA_MARKS.USN</p>
+<p class="p1">AND Sem = 8</p>
+<p class="p1">AND Sec IN ('A', 'B', 'C');</p>
+<p class="p2"><br></p>
+<p class="p1">1.</p>
+<p class="p4"><b>FIND NAMES OF ACTORS WHO ACTED IN MOVIES RELEASED IN THE YEAR 2022</b></p>
+<p class="p1">SELECT Act_Name</p>
+<p class="p1">FROM ACTOR, MOVIES, MOVIE_CAST</p>
+<p class="p1">WHERE ACTOR.Act_id = MOVIE_CAST.Act_id</p>
+<p class="p1">AND MOVIES.Mov_id = MOVIE_CAST.Mov_id</p>
+<p class="p1">AND Mov_Year = 2022;</p>
+<p class="p2"><br></p>
+<p class="p1">2.</p>
+<p class="p1"><b>FIND THE TITLES OF MOVIES THAT HAVE THE HIGHEST RATING</b></p>
+<p class="p1">SELECT Mov_Title</p>
+<p class="p1">FROM MOVIES, RATING</p>
+<p class="p1">WHERE MOVIES.Mov_id = RATING.Mov_id</p>
+<p class="p1">AND Rev_Stars = (</p>
+<p class="p1">SELECT MAX(Rev_Stars) FROM RATING</p>
+<p class="p1">);</p>
+<p class="p2"><br></p>
+<p class="p1">3.</p>
+<p class="p4"><b>LIST DIRECTORS WHO HAVE DIRECTED MOVIES IN MORE THAN ONE</b></p>
+<p class="p4"><b>LANGUAGE</b></p>
+<p class="p1">SELECT Dir_Name</p>
+<p class="p1">FROM DIRECTOR, MOVIES</p>
+<p class="p1">WHERE DIRECTOR.Dir_id = MOVIES.Dir_id</p>
+<p class="p1">GROUP BY Dir_Name</p>
+<p class="p1">HAVING COUNT(DISTINCT Mov_Lang) &gt; 1;</p>
+<p class="p2"><br></p>
+<p class="p1">4.</p>
+<p class="p4"><b>FIND ALL MOVIE TITLES THAT ARE EITHER IN ENGLISH OR HAVE A RATING OF 5</b></p>
+<p class="p4"><b>STARS</b></p>
+<p class="p1">SELECT Mov_Title</p>
+<p class="p1">FROM MOVIES, RATING</p>
+<p class="p1">WHERE MOVIES.Mov_id = RATING.Mov_id</p>
+<p class="p1">AND (Mov_Lang = 'English' OR Rev_Stars = 5);</p>
+<p class="p2"><br></p>
+<p class="p1">5.</p>
+<p class="p4"><b>FIND COMMON ACTORS WHO ACTED IN BOTH 2020 AND 2023 RELEASED MOVIES</b></p>
+<p class="p1">SELECT Act_Name</p>
+<p class="p1">FROM ACTOR, MOVIE_CAST MC1, MOVIES M1, MOVIE_CAST MC2, MOVIES</p>
+<p class="p1">M2</p>
+<p class="p1">WHERE ACTOR.Act_id = MC1.Act_id</p>
+<p class="p1">AND MC1.Mov_id = M1.Mov_id</p>
+<p class="p1">AND ACTOR.Act_id = MC2.Act_id</p>
+<p class="p1">AND MC2.Mov_id = M2.Mov_id</p>
+<p class="p1">AND M1.Mov_Year = 2020</p>
+<p class="p1">AND M2.Mov_Year = 2023;</p>
+<p class="p2"><br></p>
+<p class="p1">6.</p>
+<p class="p1"><b>CREATE A VIEW THAT LISTS MOVIE TITLE, DIRECTOR NAME, AND RATING</b></p>
+<p class="p1">CREATE VIEW MOVIE_DETAILS<b> </b>AS</p>
+<p class="p1">SELECT Mov_Title, Dir_Name, Rev_Stars</p>
+<p class="p1">FROM MOVIES, DIRECTOR, RATING</p>
+<p class="p1">WHERE MOVIES.Dir_id = DIRECTOR.Dir_id</p>
+<p class="p1">AND MOVIES.Mov_id = RATING.Mov_id</p>
+</body>
+</html>
